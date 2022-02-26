@@ -32,7 +32,6 @@ public class ReplanMeetingTest {
         $("[data-test-id=phone] .input__control").setValue(validUser.getPhone());
         $("[data-test-id=agreement]").click();
         $(byText("Запланировать")).click();
-        $("[data-test-id=success-notification] .notification__title").shouldHave(text("Успешно!"), Duration.ofSeconds(15));
         $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + firstMeetingDate));
         $("[data-test-id=date] .input__control").sendKeys(Keys.CONTROL + "A");
         $("[data-test-id=date] .input__control").sendKeys(Keys.BACK_SPACE);
@@ -41,8 +40,7 @@ public class ReplanMeetingTest {
         $("[data-test-id=replan-notification] .notification__title").shouldHave(text("Необходимо подтверждение"), Duration.ofSeconds(15));
         $("[data-test-id=replan-notification] .notification__content").shouldHave(text("У вас уже запланирована встреча на другую дату. Перепланировать?"));
         $(byText("Перепланировать")).click();
-        $("[data-test-id=success-notification] .notification__title").shouldHave(text("Успешно!"), Duration.ofSeconds(15));
-        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на "+secondMeetingDate));
+        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + secondMeetingDate));
     }
 
     @Test
@@ -53,7 +51,6 @@ public class ReplanMeetingTest {
         $("[data-test-id=phone] .input__control").setValue(validUser.getPhone());
         $("[data-test-id=agreement]").click();
         $(byText("Запланировать")).click();
-        $("[data-test-id=success-notification] .notification__title").shouldHave(text("Успешно!"), Duration.ofSeconds(15));
         $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + firstMeetingDate));
         $("[data-test-id=date] .input__control").sendKeys(Keys.CONTROL + "A");
         $("[data-test-id=date] .input__control").sendKeys(Keys.BACK_SPACE);
@@ -63,7 +60,7 @@ public class ReplanMeetingTest {
         $("[data-test-id=date] .input__control").setValue(secondMeetingDate);
         $(byText("Запланировать")).click();
         $("[data-test-id=success-notification] .notification__title").shouldHave(text("Успешно!"), Duration.ofSeconds(15));
-        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на "+secondMeetingDate));
+        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + secondMeetingDate));
     }
 
     @Test
@@ -84,7 +81,7 @@ public class ReplanMeetingTest {
         $("[data-test-id=date] .input__control").setValue(secondMeetingDate);
         $(byText("Запланировать")).click();
         $("[data-test-id=success-notification] .notification__title").shouldHave(text("Успешно!"), Duration.ofSeconds(15));
-        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на "+secondMeetingDate));
+        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + secondMeetingDate));
     }
 
     @Test
@@ -95,7 +92,6 @@ public class ReplanMeetingTest {
         $("[data-test-id=phone] .input__control").setValue("+79124567890");
         $("[data-test-id=agreement]").click();
         $(byText("Запланировать")).click();
-        $("[data-test-id=success-notification] .notification__title").shouldHave(text("Успешно!"), Duration.ofSeconds(15));
         $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + firstMeetingDate));
         $("[data-test-id=date] .input__control").sendKeys(Keys.CONTROL + "A");
         $("[data-test-id=date] .input__control").sendKeys(Keys.BACK_SPACE);
@@ -105,7 +101,7 @@ public class ReplanMeetingTest {
         $("[data-test-id=date] .input__control").setValue(secondMeetingDate);
         $(byText("Запланировать")).click();
         $("[data-test-id=success-notification] .notification__title").shouldHave(text("Успешно!"), Duration.ofSeconds(15));
-        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на "+secondMeetingDate));
+        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + secondMeetingDate));
     }
 
 }
