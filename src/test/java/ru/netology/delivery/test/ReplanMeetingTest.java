@@ -64,8 +64,6 @@ public class ReplanMeetingTest {
         $("[data-test-id=name] .input__control").setValue(DataGenerator.generateName("ru"));
         $("[data-test-id=date] .input__control").setValue(secondMeetingDate);
         $(byText("Запланировать")).click();
-        $("[data-test-id=success-notification] .notification__title")
-                .shouldHave(text("Успешно!"), Duration.ofSeconds(15));
         $("[data-test-id=success-notification] .notification__content")
                 .shouldHave(text("Встреча успешно запланирована на " + secondMeetingDate));
     }
@@ -78,8 +76,6 @@ public class ReplanMeetingTest {
         $("[data-test-id=phone] .input__control").setValue(validUser.getPhone());
         $("[data-test-id=agreement]").click();
         $(byText("Запланировать")).click();
-        $("[data-test-id=success-notification] .notification__title")
-                .shouldHave(text("Успешно!"), Duration.ofSeconds(15));
         $("[data-test-id=success-notification] .notification__content")
                 .shouldHave(text("Встреча успешно запланирована на " + firstMeetingDate));
         $("[data-test-id=date] .input__control").sendKeys(Keys.CONTROL + "A");
@@ -89,8 +85,6 @@ public class ReplanMeetingTest {
         $("[data-test-id=city] .input__control").setValue(DataGenerator.generateDoubleCity());
         $("[data-test-id=date] .input__control").setValue(secondMeetingDate);
         $(byText("Запланировать")).click();
-        $("[data-test-id=success-notification] .notification__title")
-                .shouldHave(text("Успешно!"), Duration.ofSeconds(15));
         $("[data-test-id=success-notification] .notification__content")
                 .shouldHave(text("Встреча успешно запланирована на " + secondMeetingDate));
     }
