@@ -17,6 +17,7 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class CardDeliveryTest {
     DataGenerator.UserInfo validUser = DataGenerator.Registration.generateUser("ru");
+    DataGenerator.UserInfo validUserEn = DataGenerator.Registration.generateUser("en");
 
     @BeforeEach
     public void setUp() {
@@ -28,8 +29,8 @@ public class CardDeliveryTest {
     @Test
     void shouldOrderCardWithEmptyFieldByCity() {
         $("[data-test-id=date] .input__control").setValue(DataGenerator.generateDate(3));
-        $("[data-test-id=name] .input__control").setValue("Андрей Грибанов");
-        $("[data-test-id=phone] .input__control").setValue("+79200000000");
+        $("[data-test-id=name] .input__control").setValue(validUser.getName());
+        $("[data-test-id=phone] .input__control").setValue(validUser.getPhone());
         $("[data-test-id=agreement]").click();
         $(byText("Запланировать")).click();
         $("[data-test-id=city].input_invalid .input__sub").shouldHave(text("Поле обязательно для заполнения"));
@@ -39,7 +40,7 @@ public class CardDeliveryTest {
     void shouldOrderCardWithEmptyFieldByName() {
         $("[data-test-id=city] .input__control").setValue(validUser.getCity());
         $("[data-test-id=date] .input__control").setValue(DataGenerator.generateDate(4));
-        $("[data-test-id=phone] .input__control").setValue("+79200000000");
+        $("[data-test-id=phone] .input__control").setValue(validUser.getPhone());
         $("[data-test-id=agreement]").click();
         $(byText("Запланировать")).click();
         $("[data-test-id=name].input_invalid .input__sub").shouldHave(text("Поле обязательно для заполнения"));
@@ -49,7 +50,7 @@ public class CardDeliveryTest {
     void shouldOrderCardWithEmptyFieldByPhone() {
         $("[data-test-id=city] .input__control").setValue(validUser.getCity());
         $("[data-test-id=date] .input__control").setValue(DataGenerator.generateDate(3));
-        $("[data-test-id=name] .input__control").setValue("Андрей Грибанов");
+        $("[data-test-id=name] .input__control").setValue(validUser.getName());
         $("[data-test-id=agreement]").click();
         $(byText("Запланировать")).click();
         $("[data-test-id=phone].input_invalid .input__sub").shouldHave(text("Поле обязательно для заполнения"));
@@ -59,8 +60,8 @@ public class CardDeliveryTest {
     void shouldOrderCardWithoutCheckBox() {
         $("[data-test-id=city] .input__control").setValue(validUser.getCity());
         $("[data-test-id=date] .input__control").setValue(DataGenerator.generateDate(3));
-        $("[data-test-id=name] .input__control").setValue("Андрей Грибанов");
-        $("[data-test-id=phone] .input__control").setValue("+79200000000");
+        $("[data-test-id=name] .input__control").setValue(validUser.getName());
+        $("[data-test-id=phone] .input__control").setValue(validUser.getPhone());
         $(byText("Запланировать")).click();
         $(".checkbox.input_invalid").shouldBe(visible);
     }
@@ -69,11 +70,12 @@ public class CardDeliveryTest {
     void shouldOrderCardWithDateLessThreeDays() {
         $("[data-test-id=city] .input__control").setValue(validUser.getCity());
         $("[data-test-id=date] .input__control").setValue(DataGenerator.generateDate(2));
-        $("[data-test-id=name] .input__control").setValue("Андрей Грибанов");
-        $("[data-test-id=phone] .input__control").setValue("+79200000000");
+        $("[data-test-id=name] .input__control").setValue(validUser.getName());
+        $("[data-test-id=phone] .input__control").setValue(validUser.getPhone());
         $("[data-test-id=agreement]").click();
         $(byText("Запланировать")).click();
-        $("[data-test-id=date] .input_invalid .input__sub").shouldHave(text("Заказ на выбранную дату невозможен"));
+        $("[data-test-id=date] .input_invalid .input__sub")
+                .shouldHave(text("Заказ на выбранную дату невозможен"));
     }
 
     @Test
@@ -81,31 +83,34 @@ public class CardDeliveryTest {
         $("[data-test-id=city] .input__control").setValue(validUser.getCity());
         String dateDelivery = DataGenerator.generateDate(3);
         $("[data-test-id=date] .input__control").setValue(dateDelivery);
-        $("[data-test-id=name] .input__control").setValue("Михаил Салтыков-Щедрин");
+        $("[data-test-id=name] .input__control").setValue(DataGenerator.generateDoubleSurname());
         $("[data-test-id=phone] .input__control").setValue(validUser.getPhone());
         $("[data-test-id=agreement]").click();
         $(byText("Запланировать")).click();
-        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + dateDelivery), Duration.ofSeconds(15));
+        $("[data-test-id=success-notification] .notification__content")
+                .shouldHave(text("Встреча успешно запланирована на " + dateDelivery), Duration.ofSeconds(15));
     }
 
     @Test
     public void shouldSendFormByNameOfCityWithDash() {
-        $("[data-test-id=city] .input__control").setValue("Йошкар-Ола");
+        $("[data-test-id=city] .input__control").setValue(DataGenerator.generateDoubleCity());
         String dateDelivery = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         $("[data-test-id=date] .input__control").setValue(dateDelivery);
-        $("[data-test-id=name] .input__control").setValue("Андрей Грибанов");
+        $("[data-test-id=name] .input__control").setValue(validUser.getName());
         $("[data-test-id=phone] .input__control").setValue(validUser.getPhone());
         $("[data-test-id=agreement]").click();
         $(byText("Запланировать")).click();
-        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + dateDelivery), Duration.ofSeconds(15));
+        $("[data-test-id=success-notification] .notification__content")
+                .shouldHave(text("Встреча успешно запланирована на " + dateDelivery), Duration.ofSeconds(15));
     }
 
     @Test
     public void shouldSendFormWithNotCyrillicSymbolsByName() {
         $("[data-test-id=city] .input__control").setValue(validUser.getCity());
-        $("[data-test-id=date] .input__control").setValue(LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
-        $("[data-test-id=name] .input__control").setValue("Andrey Gribanov");
-        $("[data-test-id=phone] .input__control").setValue("+79200000000");
+        $("[data-test-id=date] .input__control").
+                setValue(LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+        $("[data-test-id=name] .input__control").setValue(validUserEn.getName());
+        $("[data-test-id=phone] .input__control").setValue(validUser.getPhone());
         $("[data-test-id=agreement]").click();
         $(byText("Запланировать")).click();
         $("[data-test-id=name].input_invalid .input__sub").shouldHave(text("Имя и Фамилия указаные неверно."));
@@ -113,13 +118,15 @@ public class CardDeliveryTest {
 
     @Test
     public void shouldSendFormWithCityNotInList() {
-        $("[data-test-id=city] .input__control").setValue("Северск");
-        $("[data-test-id=date] .input__control").setValue(LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
-        $("[data-test-id=name] .input__control").setValue("Андрей Грибанов");
-        $("[data-test-id=phone] .input__control").setValue("+79200000000");
+        $("[data-test-id=city] .input__control").setValue(DataGenerator.generateLocalCity());
+        $("[data-test-id=date] .input__control")
+                .setValue(LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+        $("[data-test-id=name] .input__control").setValue(validUser.getName());
+        $("[data-test-id=phone] .input__control").setValue(validUser.getPhone());
         $("[data-test-id=agreement]").click();
         $(byText("Запланировать")).click();
-        $("[data-test-id=city].input_invalid .input__sub").shouldHave(text("Доставка в выбранный город недоступна"));
+        $("[data-test-id=city].input_invalid .input__sub")
+                .shouldHave(text("Доставка в выбранный город недоступна"));
     }
 
 //    @Test

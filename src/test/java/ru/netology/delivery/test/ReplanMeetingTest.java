@@ -32,56 +32,67 @@ public class ReplanMeetingTest {
         $("[data-test-id=phone] .input__control").setValue(validUser.getPhone());
         $("[data-test-id=agreement]").click();
         $(byText("Запланировать")).click();
-        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + firstMeetingDate));
+        $("[data-test-id=success-notification] .notification__content")
+                .shouldHave(text("Встреча успешно запланирована на " + firstMeetingDate));
         $("[data-test-id=date] .input__control").sendKeys(Keys.CONTROL + "A");
         $("[data-test-id=date] .input__control").sendKeys(Keys.BACK_SPACE);
         $("[data-test-id=date] .input__control").setValue(secondMeetingDate);
         $(byText("Запланировать")).click();
-        $("[data-test-id=replan-notification] .notification__title").shouldHave(text("Необходимо подтверждение"), Duration.ofSeconds(15));
-        $("[data-test-id=replan-notification] .notification__content").shouldHave(text("У вас уже запланирована встреча на другую дату. Перепланировать?"));
+        $("[data-test-id=replan-notification] .notification__title")
+                .shouldHave(text("Необходимо подтверждение"), Duration.ofSeconds(15));
+        $("[data-test-id=replan-notification] .notification__content")
+                .shouldHave(text("У вас уже запланирована встреча на другую дату. Перепланировать?"));
         $(byText("Перепланировать")).click();
-        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + secondMeetingDate));
+        $("[data-test-id=success-notification] .notification__content")
+                .shouldHave(text("Встреча успешно запланирована на " + secondMeetingDate));
     }
 
     @Test
     void shouldPlanAndReplanMeetingWithDifferentByName() {
         $("[data-test-id=city] .input__control").setValue(validUser.getCity());
         $("[data-test-id=date] .input__control").setValue(firstMeetingDate);
-        $("[data-test-id=name] .input__control").setValue("Максим Петров");
+        $("[data-test-id=name] .input__control").setValue(validUser.getName());
         $("[data-test-id=phone] .input__control").setValue(validUser.getPhone());
         $("[data-test-id=agreement]").click();
         $(byText("Запланировать")).click();
-        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + firstMeetingDate));
+        $("[data-test-id=success-notification] .notification__content")
+                .shouldHave(text("Встреча успешно запланирована на " + firstMeetingDate));
         $("[data-test-id=date] .input__control").sendKeys(Keys.CONTROL + "A");
         $("[data-test-id=date] .input__control").sendKeys(Keys.BACK_SPACE);
         $("[data-test-id=name] .input__control").sendKeys(Keys.CONTROL + "A");
         $("[data-test-id=name] .input__control").sendKeys(Keys.BACK_SPACE);
-        $("[data-test-id=name] .input__control").setValue("Максим петров");
+        $("[data-test-id=name] .input__control").setValue(DataGenerator.generateName("ru"));
         $("[data-test-id=date] .input__control").setValue(secondMeetingDate);
         $(byText("Запланировать")).click();
-        $("[data-test-id=success-notification] .notification__title").shouldHave(text("Успешно!"), Duration.ofSeconds(15));
-        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + secondMeetingDate));
+        $("[data-test-id=success-notification] .notification__title")
+                .shouldHave(text("Успешно!"), Duration.ofSeconds(15));
+        $("[data-test-id=success-notification] .notification__content")
+                .shouldHave(text("Встреча успешно запланирована на " + secondMeetingDate));
     }
 
     @Test
     void shouldPlanAndReplanMeetingWithDifferentByCity() {
-        $("[data-test-id=city] .input__control").setValue("Нижний Новгород");
+        $("[data-test-id=city] .input__control").setValue(DataGenerator.generateCity());
         $("[data-test-id=date] .input__control").setValue(firstMeetingDate);
         $("[data-test-id=name] .input__control").setValue(validUser.getName());
         $("[data-test-id=phone] .input__control").setValue(validUser.getPhone());
         $("[data-test-id=agreement]").click();
         $(byText("Запланировать")).click();
-        $("[data-test-id=success-notification] .notification__title").shouldHave(text("Успешно!"), Duration.ofSeconds(15));
-        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + firstMeetingDate));
+        $("[data-test-id=success-notification] .notification__title")
+                .shouldHave(text("Успешно!"), Duration.ofSeconds(15));
+        $("[data-test-id=success-notification] .notification__content")
+                .shouldHave(text("Встреча успешно запланирована на " + firstMeetingDate));
         $("[data-test-id=date] .input__control").sendKeys(Keys.CONTROL + "A");
         $("[data-test-id=date] .input__control").sendKeys(Keys.BACK_SPACE);
         $("[data-test-id=city] .input__control").sendKeys(Keys.CONTROL + "A");
         $("[data-test-id=city] .input__control").sendKeys(Keys.BACK_SPACE);
-        $("[data-test-id=city] .input__control").setValue("Великий Новгород");
+        $("[data-test-id=city] .input__control").setValue(DataGenerator.generateDoubleCity());
         $("[data-test-id=date] .input__control").setValue(secondMeetingDate);
         $(byText("Запланировать")).click();
-        $("[data-test-id=success-notification] .notification__title").shouldHave(text("Успешно!"), Duration.ofSeconds(15));
-        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + secondMeetingDate));
+        $("[data-test-id=success-notification] .notification__title")
+                .shouldHave(text("Успешно!"), Duration.ofSeconds(15));
+        $("[data-test-id=success-notification] .notification__content")
+                .shouldHave(text("Встреча успешно запланирована на " + secondMeetingDate));
     }
 
     @Test
@@ -89,19 +100,22 @@ public class ReplanMeetingTest {
         $("[data-test-id=city] .input__control").setValue(validUser.getCity());
         $("[data-test-id=date] .input__control").setValue(firstMeetingDate);
         $("[data-test-id=name] .input__control").setValue(validUser.getName());
-        $("[data-test-id=phone] .input__control").setValue("+79124567890");
+        $("[data-test-id=phone] .input__control").setValue(validUser.getPhone());
         $("[data-test-id=agreement]").click();
         $(byText("Запланировать")).click();
-        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + firstMeetingDate));
+        $("[data-test-id=success-notification] .notification__content")
+                .shouldHave(text("Встреча успешно запланирована на " + firstMeetingDate));
         $("[data-test-id=date] .input__control").sendKeys(Keys.CONTROL + "A");
         $("[data-test-id=date] .input__control").sendKeys(Keys.BACK_SPACE);
         $("[data-test-id=phone] .input__control").sendKeys(Keys.CONTROL + "A");
         $("[data-test-id=phone] .input__control").sendKeys(Keys.BACK_SPACE);
-        $("[data-test-id=phone] .input__control").setValue("+89124567890");
+        $("[data-test-id=phone] .input__control").setValue(DataGenerator.generatePhone("ru"));
         $("[data-test-id=date] .input__control").setValue(secondMeetingDate);
         $(byText("Запланировать")).click();
-        $("[data-test-id=success-notification] .notification__title").shouldHave(text("Успешно!"), Duration.ofSeconds(15));
-        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + secondMeetingDate));
+        $("[data-test-id=success-notification] .notification__title")
+                .shouldHave(text("Успешно!"), Duration.ofSeconds(15));
+        $("[data-test-id=success-notification] .notification__content")
+                .shouldHave(text("Встреча успешно запланирована на " + secondMeetingDate));
     }
 
 }
